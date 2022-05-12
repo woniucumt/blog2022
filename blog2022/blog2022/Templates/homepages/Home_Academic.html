@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>蜗牛的世界</title>
+    <link href="../static/css/boostrapdiagoona.min.css" rel="stylesheet" /> <!-- https://getbootstrap.com/ -->
+    <link href="../static/css/templatemo-diagoona.css" rel="stylesheet" />
+<!--
+
+TemplateMo 550 Diagoona
+
+https://templatemo.com/tm-550-diagoona
+
+-->
+</head>
+
+<body>
+    <div class="tm-container">
+        <!-- Diagonal background design -->
+        <div class="tm-bg" id="sssss">
+            <div class="tm-bg-left"></div>
+            <div class="tm-bg-right"></div>
+        </div>
+        <div style="z-index: 1000">
+            <div class="tm-row pt-4">
+                <div class="tm-col-left">
+                    <div class="tm-site-header media">
+                        <i class="fas fa-umbrella-beach fa-3x mt-1 tm-logo"></i>
+                        <div class="media-body">
+                            <h1 class="tm-sitename text-uppercase">蜗牛的世界</h1>
+                            <p class="tm-slogon" style="font-size: 1.2rem;">自律给人自由</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tm-col-right">
+                    <nav class="navbar navbar-expand-lg" id="tm-main-nav">
+                        <button class="navbar-toggler toggler-example mr-0 ml-auto" type="button" 
+                            data-toggle="collapse" data-target="#navbar-nav" 
+                            aria-controls="navbar-nav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span>&#9776;</span>
+                        </button>
+                        <div class="collapse navbar-collapse tm-nav" id="navbar-nav">
+                            <ul class="navbar-nav text-uppercase">
+                                <li class="nav-item">
+                                    <a class="nav-link tm-nav-link" href={% url 'Home_Home_View' %}>培风</a>
+                                </li>
+                                <li class="nav-item active">
+                                    <a class="nav-link tm-nav-link" href="#">破卷<span class="sr-only">(current)</span></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link tm-nav-link" href={% url 'Home_Blog_View' %}>无疆</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link tm-nav-link" href={% url 'Home_Gallery_View' %}>筑蜃</a>
+                                </li>
+                            </ul>                            
+                        </div>                        
+                    </nav>
+                </div>
+            </div>
+            
+            <div class="tm-row">
+                <div class="tm-col-left"></div>
+                <main class="tm-col-right">
+                    <section class="tm-content" id="section_1">
+                        <h2 class="mb-5 tm-content-title">我劝天公重抖擞</h2>
+                        <p class="mb-5 content_ordinary">『 山重 』『 醍醐 』『 花明 』</p>
+                        <hr class="mb-5">
+                        <p class="mb-5 content_ordinary">进击的研究僧。<br/>撸得了计算思维，盘得了代码可读性分析。
+                            软件与硬件编程齐飞，Block与Scratch共一色。我待ML如初恋，ML虐我千百遍。
+                        </p>
+{#                        <a href="javascript:alert('该系统维护中！敬请期待！')" class="btn btn-primary">研究领域</a>#}
+                        <a onclick="showSection2()" class="btn btn-primary">查看研究</a>
+
+                    </section>
+                    <section class="tm-content tm-about" id="section_2" style="display:none;">
+                        <div class="class=media my-3 mb-5 tm-service-media tm-service-media-img-l">
+                             <h2 class="mb-5 tm-content-title">研究领域</h2>
+                            <a href="javascript:alert('本页系统维护中！敬请期待！')" class="btn btn-primary" style="width: 48%;height: 100%;" >
+                                <img src="../../static/images/jssw.svg" alt="Image" class="tm-service-img">
+                                <p style="font-size: 20px;margin: 0 auto">计算思维</p>
+                            </a>
+                            <a href="javascript:alert('本页系统维护中！敬请期待！')" class="btn btn-primary"style="width: 48%;height: 100%" >
+                                <img src="../../static/images/code.svg" alt="Image" class="tm-service-img">
+                                <p style="font-size: 20px;margin: 0 auto">编程工具</p>
+                            </a>
+                            <a href="javascript:alert('本页系统维护中！敬请期待！')" class="btn btn-primary" style="width: 48%;height: 100%;margin-top: 10px;" >
+                                <img src="../../static/images/dmkdx.svg" alt="Image" class="tm-service-img">
+                                <p style="font-size: 20px;margin: 0 auto">代码可读性</p>
+                            </a>
+                            <a href="javascript:alert('本页系统维护中！敬请期待！')" class="btn btn-primary"style="width: 48%;height: 100%;margin-top: 10px;" >
+                                <img src="../../static/images/znjj.svg" alt="Image" class="tm-service-img">
+                                <p style="font-size: 20px;margin: 0 auto">智能家居</p>
+                            </a>
+                        </div>
+                        <hr/>
+                        <a onclick="showSection1()" class="btn btn-primary">返回主页</a>
+                    </section>
+                </main>
+            </div>
+        </div>        
+
+        <div class="tm-row" style="margin: 0 auto;z-index: 1000">
+            <div>
+                <footer class="tm-site-footer text-right">
+                    <p >Copyright &copy; 2020  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Designed By Woniu</p>
+                </footer>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script src="../static/js/jquery-3.4.1.min.js"></script>
+    <script src="../static/js/diagoona-bootstrap.min.js"></script>
+    <script src="../static/js/jquery.backstretch.min.js"></script>
+    <script src="../static/js/templatemo-script.js"></script>
+    <script>
+        $(document).ready(function () {
+            const bgImgsNames = ['../static/images/Home_Academic_Bg.jpeg'];
+            $.backstretch(bgImgsNames, {duration: 4000, fade: 500});
+        });
+
+    </script>
+    <script>
+            function showSection2(str) {
+                document.getElementById("section_1").style.display = "none";
+                document.getElementById("section_2").style.display = "block";
+            }
+            function showSection1(str) {
+                document.getElementById("section_2").style.display = "none";
+                document.getElementById("section_1").style.display = "block";
+            }
+        </script>
+</body>
+</html>

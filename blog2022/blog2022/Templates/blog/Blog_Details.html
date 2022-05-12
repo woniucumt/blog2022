@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh">
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>博文详情</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+{#    详情页，不要适应手机的宽度，直接限制最小宽度。#}
+    <!-- mobile specific metas
+    ================================================== -->
+{#    本人亲测，0.6对手机兼容的最好的。#}
+    <meta name="viewport" content="width=device-width, initial-scale=0.6">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../static/css/base.css">
+    <link rel="stylesheet" href="../static/css/vendor.css">
+    <link rel="stylesheet" href="../static/css/detailsmain2.css">
+
+    <!-- script
+    ================================================== -->
+    <script src="../static/js/modernizr.js"></script>
+    <script type="text/javascript" src="../static/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="../static/js/bootstrap.js"></script>
+
+</head>
+
+<body class="ss-bg-white" style="min-width: 600px">
+
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader" class="dots-fade">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <div id="top" class="s-wrap site-wrapper" style="overflow: hidden">
+
+        <!-- site header
+        ================================================== -->
+        <header class="s-header header go-top2" style="overflow: hidden">
+            <div class="header__top " style="overflow: hidden">
+                <div class="header__logo">
+                    <a class="site-logo">
+                        <p style="font-size: 4rem;color: #ffffff;" ><a href="{% url 'Home_Home_View' %}" style="color:#f0ad4e">无疆</a></p>
+                    </a>
+                </div>
+
+
+            </div>
+
+            <nav class="header__nav-wrap">
+
+                <ul class="header__nav">
+{#                    <li id="closemenu">关闭菜单</li>#}
+                    <li class="current" style="color: #ffffff">当前位置：博客详情</li>
+                    <li class="current" style="color: #ffffff"><hr/></li>
+                    <li class="current"><a href={% url 'Home_Home_View' %} style="color:#f0ad4e" >主站点</a></li>
+                    <li class="current"><a href={% url 'Blog_Index_View' %} style="color:#f0ad4e" >博客列表</a></li>
+                    {% for cate in navs %}
+                        <li><a href="/category/{{ cate.id }}" title="">{{ cate.name }} ({{ cate.post_count }})</a></li>
+                    {% endfor %}
+
+                </ul>
+
+            </nav> <!-- end header__nav-wrap -->
+
+        </header> <!-- end s-header -->
+
+
+        <!-- site content
+        ================================================== -->
+        <div class="s-content content" style="display: flex">
+            <main class="row content__page" >
+
+                <article class="column large-full entry format-standard content_shadow"
+                         style="background-color: #ffffff;padding-top: 40px;padding-bottom: 20px;border-radius: 8px 8px 20px 20px;">
+
+                    <div class="content__page-header entry__header">
+                        <h1 class="display-1 entry__title">
+                        {{ blog.title }}
+                                {% if blog.is_orignal == "原创" %}
+                                <a style="color: #22aaff;font-size: 12px;border: 1px solid #22aaff;border-radius: 10px;">&nbsp;&nbsp;原创&nbsp;&nbsp;</a>
+                                {% endif  %}
+                                {% if blog.is_orignal == "加工" %}
+                                <a style="color: #2d00ff;font-size: 12px;border: 1px solid #2d00ff;border-radius: 10px;">&nbsp;&nbsp;加工&nbsp;&nbsp;</a>
+                                {% endif  %}
+                                {% if blog.is_orignal == "转载" %}
+                                <a style="color: #ff7d1f;font-size: 12px;border: 1px solid #ff7d1f;border-radius: 10px;">&nbsp;&nbsp;转载&nbsp;&nbsp;</a>
+                                {% endif  %}
+
+                        </h1>
+                        <ul class="entry__header-meta">
+                            <li class="author" style="color: #757578">By <a href="#0">Woniu</a></li>
+                            <li class="date" style="color: #757578">{{ blog.created_time }}</li>
+                            <li class="date" style="color: #757578">查看：{{ blog.times }}</li>
+                            <li class="date" style="color: #757578">点赞： <a class="random"></a></li>
+
+                        </ul>
+                        <hr/>
+                    </div> <!-- end entry__header -->
+
+                    <div class="entry__content">
+                            {#                    我暂时当你是markdown的吧#}
+                        <div class="entry__content">
+                                {% autoescape off %}
+                                    {{ blog.content }}
+                                {% endautoescape %}
+                        </div> <!-- end entry content -->
+                    </div> <!-- end entry content -->
+                    <div style="text-align: center;padding-top: 10px">
+                        <a href="Blog_Details.html"><span style="color: #757578;font-size: 15px" >------THE END------</span></a>
+                    </div>
+                {#                    评论区#}
+                    <div style="padding-top: 20px;padding-left: 20px;position: relative">
+
+{#                        <div style="display:inline-block;text-align: left;margin:0 auto;padding-left: 80px;width: 100%">#}
+{#                            <textarea style="background-color: #f8f8f8;border-radius: 10px;border:none;height: 200px;width: 100%;height: 80px;padding-left: 10px;"  >来都来了，说点什么吧。#}
+{#                            </textarea>#}
+{#                        </div>#}
+                        <form action="{% url 'Comment_View' %}" method="POST">
+                            {% csrf_token %}
+                            <input name="target" type="hidden" value="{{ blog.id }}"/>
+
+                            <div style="display:inline-block;min-width: 70px;position: absolute" >
+                            <img src="../static/images/icons/touxiang.jpeg" style="height: 50px;width: 50px;border-radius: 100%;margin:0 auto;">
+                            </div>
+                            <div style="display:inline-block;text-align: left;margin:0 auto;padding-left: 60px;width: 100%">
+                                {{ comment_form.nickname }}
+                            </div>
+                            <div style="display:inline-block;text-align: left;margin:0 auto;padding-left: 60px;width: 100%;margin-top: 5px;">{{ comment_form.content }}</div>
+                            <input style="background-color: #d5d5d5;border-radius: 40px;font-size:15px; border:none;height: 30px;margin-left: 60px;line-height: 0px;color: #4c4c4c;" type = "submit" , value="我来指教！">
+                        </form>
+                    </div>
+
+                </article> <!-- end column large-full entry-->
+{#            评论区#}
+            {% for comment in comments %}
+                <article class="column large-full entry format-standard content_shadow"
+                         style="background:#ffffff; border-radius: 10px;vertical-align:middle;text-align: center;height: fit-content;margin-top: 10px;padding-bottom: 20px">
+                    <div style="padding-top: 20px;padding-left: 10px;position: relative">
+                        <div style="display:inline-block;min-width: 40px;position: absolute" >
+                            <img src="../static/images/icons/touxiang.jpeg" style="height: 40px;width: 40px;border-radius: 100%;margin:0 auto;">
+                        </div>
+                        <div style="display: inline-block;width: 100%;padding-left: 45px;text-align: left">
+                            <p style="display:inline-block;font-size: 18px;text-align: left;margin-left: 10px;color: #757578">{{ comment.nickname }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ comment.created_time }}</p>
+                            <img src="../static/images/icons/dianzan.svg" style="height: 20px;width: 20px;margin: 0 auto;vertical-align: middle;margin-left: 20px">
+                            <p style="display:inline-block ;vertical-align: middle;font-size: 15px;color: #757578" ><a class="random" ></a></p>
+                        </div>
+                        <div style="text-align: left;margin:0 auto;padding-left: 45px;width: 100%">
+
+                            <p style="height: 200px;width: 100%;height: fit-content;padding-left: 10px;font-size: 15px;color : #757578;padding-top: 15px"  >
+                                {{ comment.content }}
+                            </p>
+                        </div>
+                    </div>
+                </article> <!-- end column large-full entry-->
+            {% endfor %}
+
+            </main>
+            <main class="row content__page right_slide_details" style="min-width: 290px;height: fit-content">
+
+                <article class="column large-full entry format-standard content_shadow"
+                         style="background:#ffffff; border-radius: 0px;border-top: 5px solid black;vertical-align:middle;text-align: center;height: fit-content">
+                    <div style="padding-top: 20px;">
+                        <div style="display:inline-block">
+                            <img src="../static/images/icons/touxiang.jpeg" style="height: 60px;width: 60px;border-radius: 100%;margin:0 auto;">
+                        </div>
+                        <div style="display:inline-block;text-align: left;margin:0 auto;padding-left: 10px">
+                          <p class='footbanner' style="color: #757578;margin:0 auto;font-size: 18px"> 进击的蜗牛</p>
+                          <p class='footbanner' style="color: #757578;margin:0 auto;font-size: 18px"> 创作不易，看且珍惜</p>
+                        </div>
+                    </div>
+                    <div style="padding-top: 5px;">
+                        <span style="color: #757578;font-size: 14px" >---来都来了，点个赞吧---</span>
+                    </div>
+                    <div style="padding:10px 10px">
+                       <img id='dianzanimg2' class="dianzan" onclick="dianzan2()" src="../../static/images/sjb8.gif" style="height: 50px;width: 50px;border-radius: 10%;margin: 0px 0px;">
+                       <img id='dianzanimg3' class="dianzan" onclick="dianzan3()" src="../../static/images/sjb8.gif" style="height: 50px;width: 50px;border-radius: 10%;margin: 0px 0px;">
+                       <img id='dianzanimg4' class="dianzan" onclick="dianzan4()" src="../../static/images/sjb8.gif" style="height: 50px;width: 50px;border-radius: 10%;margin: 0px 0px;">
+                       <img id='dianzanimg5' class="dianzan" onclick="dianzan5()" src="../../static/images/sjb8.gif" style="height: 50px;width: 50px;border-radius: 10%;margin: 0px 0px;">
+                    </div>
+
+                </article> <!-- end column large-full entry-->
+                <article class="column large-full entry format-standard content_shadow"
+                         style="background:#ffffff; border-radius: 0px;border-top: 5px solid black;height: fit-content;margin-bottom: 10px">
+                    <div>
+                        <div style="display:inline-block;text-align: left;padding-top: 10px">
+                          <p class='footbanner' style="color: #2b2b2e;margin:0 auto;font-size: 20px">热门文章</p>
+                        </div>
+                    </div>
+                    {% for blog in hot_blogs %}
+                    <div style="display: inline-block;vertical-align: middle" class="wordcut_oneline">
+                        <a href={% url 'Blog_Detail_View' blog.id  %}><span style="color: #757578;font-size: 15px" >{{ blog.title }}</span></a>
+                    </div>
+                    <span  style="display:inline-block;vertical-align:middle;font-size: 14px;color: #757578">
+                        <img src="../static/images/icons/read.svg" style="height: 15px;width: 15px;margin: 0 auto;vertical-align: middle;">
+                        <p style="display:inline-block ;vertical-align: middle" ><a class="random" ></a></p>
+                        <img src="../static/images/icons/dianzan.svg" style="height: 15px;width: 15px;margin: 0 auto;vertical-align: middle;">
+                        <p style="display:inline-block ;vertical-align: middle" ><a class="random" ></a></p>
+                    </span>
+                        <br/>
+                    {% endfor %}
+                    <div style="text-align: center;margin-top: 10px">
+                        <button style="background-color: #83c1c8;line-height: 0px;height: 40px;width: 140px;background-color: #515151;color: #ffffff;font-size: 15px;">查看更多</button>
+                    </div>
+                </article> <!-- end column large-full entry-->
+                <article class="column large-full entry format-standard content_shadow"
+                         style="background:#ffffff; border-radius: 0px;border-top: 5px solid black;height: fit-content;padding-bottom: 10px">
+                    <div>
+{#                        <div style="display:inline-block">#}
+{#                            <img src="../static/images/icons/relate.png" style="height: 50px;width: 50px;border-radius: 100%;margin:0 auto;">#}
+{#                        </div>#}
+                        <div style="display:inline-block;text-align: left;padding-top: 10px">
+                          <p class='footbanner' style="color: #535356;margin:0 auto;font-size: 20px">最新评论</p>
+                        </div>
+                    </div>
+                    {% for comment in comments %}
+                    <div style="padding-top: 2px;" class="wordcut_oneline">
+                        <a href="Blog_Details.html"><span style="color: #757578;font-size: 15px;" >"{{ comment.content }}"</span></a>
+                    </div>
+                    {% endfor %}
+                </article> <!-- end column large-full entry-->
+
+            </main>
+
+
+        </div> <!-- end s-content -->
+            {#                  文章结束后的个人部分#}
+
+        <!-- footer
+        ================================================== -->
+        <footer class="s-footer footer">
+            <div class="row">
+                <div class="column large-full footer__content">
+                    <div class="footer__copyright">
+                        <span>Copyright &copy; 2020  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Designed By Woniu</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div> <!-- end s-wrap -->
+
+
+    <!-- Java Script
+    ================================================== -->
+    <script src="../static/js/jquery-3.2.1.min.js"></script>
+    <script src="../static/js/plugins.js"></script>
+    <script src="../static/js/detailsmain2.js"></script>
+    <script src="../static/js/dianzan.js"></script>
+{#    生成随机数#}
+    <script type="text/javascript">
+        var ele=document.getElementsByClassName("random");
+        var count=ele.length
+        for(var i =0;i<count;i++)
+        {
+              ele[i].innerHTML=parseInt(100*Math.random())
+        }
+    </script>
+</body>

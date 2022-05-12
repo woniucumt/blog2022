@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh">
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>博客列表</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=0.6">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../static/css/blogindexbase.css">
+    <link rel="stylesheet" href="../static/css/blogindexvendor.css">
+    <link rel="stylesheet" href="../static/css/blogindexmain.css">
+    <link href="../static/css/blogindexstyle.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="../static/css/blogindexboostrap.css" rel="stylesheet" type="text/css" media="all" />
+
+    <!-- script
+    ================================================== -->
+    <script src="../static/js/modernizr.js"></script>
+
+    <!-- favicons
+    ================================================== -->
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+{#    <link rel="stylesheet" href="../static/css/animationstyle.css">#}
+
+
+</head>
+
+<body>
+
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader" class="dots-fade">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <div id="top" class="s-wrap site-wrapper" style="background-color: #f6f7f8;overflow: hidden">
+
+        <!-- site header
+        ================================================== -->
+        <header class="s-header header" style="overflow: hidden" >
+
+            <div class="header__top " style="overflow: hidden">
+                <div class="header__logo">
+                    <a class="site-logo">
+                        <p style="font-size: 4rem;color: #ffffff;" ><a href="{% url 'Home_Blog_View' %}" style="color:#f0ad4e">无疆</a></p>
+                    </a>
+                </div>
+
+
+            </div> <!-- end header__top -->
+
+            <nav class="header__nav-wrap">
+
+                <ul class="header__nav">
+{#                    <li id="closemenu">关闭菜单</li>#}
+                    <li class="current" style="color: #ffffff">当前位置：博客详情</li>
+                    <li class="current" style="color: #ffffff"><hr/></li>
+                    <li class="current"><a href={% url 'Home_Blog_View' %} style="color:#f0ad4e" >主站点</a></li>
+                    <li class="current"><a href={% url 'Blog_Index_View' %} style="color:#f0ad4e" >博客列表</a></li>
+                    {% for cate in navs %}
+                        <li><a href="/category/{{ cate.id }}" title="">{{ cate.name }} ({{ cate.post_count }})</a></li>
+                    {% endfor %}
+
+                </ul>
+
+            </nav> <!-- end header__nav-wrap -->
+
+        </header> <!-- end s-header -->
+
+        <div class="s-content" style="display: flex">
+
+            <div class="masonry-wrap" >
+
+                <div class="masonry">
+
+                    <div class="grid-sizer" ></div>
+                    <article class="masonry__brick entry format-standard animate-this">
+
+                                <div class="entry__thumb" style="max-height: 300px;height: fit-content">
+                                    <a class="entry__thumb-link">
+                                        {% if category.id == "1"%}
+                                            <img src="../static/images/pic_django.jpg">
+                                        {% elif category.id == "2"%}
+                                            <img src="../static/images/pic_frontend.jpg">
+                                        {% elif category.id == "3"%}
+                                            <img src="../static/images/pic_git.jpg">
+                                        {% elif category.id == "4"%}
+                                        {% else %}
+                                            <img src="../static/images/pic_top.jpg">
+                                        {% endif %}
+                                    </a>
+                                </div>
+
+
+                            </article> <!-- end article -->
+                    <article class="masonry__brick entry  animate-this"style="margin: 0 auto;" >
+                        <div class="entry__text" style="background-color: rgba(255,255,255,1)" >
+                            <div class="entry__header">
+                                {% if category.name  %}
+                                    <h4 style="display: inline">当前分类：{{ category.name }} &nbsp;（共{{ blog_list.count }}篇）</h4>
+                                    <a href="{% url 'Blog_Index_View' %}"><h4 style="display: inline;padding:5px 10px 5px 10px;margin-left:10px;background-color: #dcdcdc;border-radius: 5px;" >全部</h4></a>
+                                {% else %}
+                                    <h4 style="display: inline">当前分类：全部</h4>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </article> <!-- end article -->
+                    <article class="masonry__brick entry  animate-this" style="align-content: center;margin: 0 auto" >
+                        <div class="entry__text" style="background-color: rgba(255,255,255,0);text-align: center" >
+                            <div class="entry__header">
+                                    <button class="buttonTag" style="background-color: #83c1c8">标签</button>
+                                    <button class="buttonTag" style="background-color: #7dbd85">功能</button>
+                                    <button class="buttonTag" style="background-color: #ecc35e">正在</button>
+                                    <button class="buttonTag" style="background-color: #625dc8">开发</button>
+                                    <button class="buttonTag" style="background-color: #e4977a">敬请</button>
+                                    <button class="buttonTag" style="background-color: #efb7c2">期待</button>
+                            </div>
+{#                            为了让标签页看起来居中#}
+{#                            <hr style="margin-top: 30px"/>#}
+                        </div>
+                    </article> <!-- end article -->
+                    {% for blog in blog_list %}
+                    {% if not blog.is_topped %}
+                    <article class="masonry__brick entry  animate-this">
+
+                        <div class="entry__text" onclick='window.open("{% url 'Blog_Detail_View'  blog.id  %}")'>
+                            <div class="entry__header">
+                                <h2 class="entry__title">{{ blog.title }}
+                                {% if blog.is_orignal == "原创" %}
+                                <a style="color: #22aaff;font-size: 12px;border: 1px solid #22aaff;border-radius: 10px;">&nbsp;&nbsp;原创&nbsp;&nbsp;</a>
+                                {% endif  %}
+                                {% if blog.is_orignal == "加工" %}
+                                <a style="color: #2d00ff;font-size: 12px;border: 1px solid #2d00ff;border-radius: 10px;">&nbsp;&nbsp;加工&nbsp;&nbsp;</a>
+                                {% endif  %}
+                                {% if blog.is_orignal == "转载" %}
+                                <a style="color: #ff7d1f;font-size: 12px;border: 1px solid #ff7d1f;border-radius: 10px;">&nbsp;&nbsp;转载&nbsp;&nbsp;</a>
+                                {% endif  %}
+                                </h2>
+                                <div class="entry__meta">
+                                    <span class="entry__meta-cat">
+                                        分类 : {{ blog.category }}
+{#                                        <a >标签:{{ post.tag }}</a>#}
+                                    </span>
+                                    <span class="entry__meta-date">发表时间：
+                                        {{ blog.created_time }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="entry__excerpt">
+                                <p class="wordcut" style="min-height: 60px;" >
+                                    {{ blog.desc }}
+                                </p>
+                            </div>
+                            <hr style="margin-top: 10px;margin-bottom: 10px"/>
+                                <span  style="vertical-align: middle;font-size: 15px;color: rgba(0,0,0,0.5)">
+                                    <img src="../static/images/icons/read.svg" style="height: 18px;width: 18px;">
+                                    <p style="display:inline-block ;vertical-align: middle" >阅读 ( {{ blog.times }} )</p>
+                                    <img src="../static/images/icons/dianzan.svg" style="height: 18px;width: 18px;">
+                                    <p style="display:inline-block ;vertical-align: middle" >点赞 (<a class="random" style="color: #535354"></a>)</p>
+                                    <img src="../static/images/icons/share.svg" style="height: 18px;width: 18px;">
+                                    <p style="display:inline-block ;vertical-align: middle"  >分享 (<a class="random" style="color: #535354"></a>)</p>
+                                </span>
+                        </div>
+                    </article>
+                    {% endif %}
+                    {% endfor %}
+
+                    {% if blog_list.count < 4 %}
+
+                    <article class="masonry__brick entry  animate-this">
+
+                        <div class="entry__text">
+                            <div class="entry__header">
+                                <h2 class="entry__title"><a >在学了在学了别催鸭！</a></h2>
+                                <div class="entry__meta">
+                                    <span class="entry__meta-cat">
+                                        <a >分类 : {{ blog.category }}</a>
+{#                                        <a >标签:{{ post.tag }}</a>#}
+                                    </span>
+                                    <span class="entry__meta-date">发表时间：
+                                        <a >系统上线那一天</a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="entry__excerpt">
+                                <p class="wordcut" style="min-height: 60px;" >
+                                    博主在学了！原谅博主又得找工作又得学各种东西……写博不易，且催且珍惜！
+                                    毕竟系统才刚上线鸭！系统整体升级，之前的文章不要了！不要了！
+
+                                </p>
+                            </div>
+                            <hr style="margin-top: 10px;margin-bottom: 10px"/>
+                                <span  style="vertical-align: middle">
+
+                                    <img src="../static/images/icons/read.svg" style="height: 18px;width: 18px;">
+                                    <a>催(<a class="random"> </a>)</a>
+                                    <img src="../static/images/icons/dianzan.svg" style="height: 18px;width: 18px;">
+                                    <a>催催(<a class="random"> </a>)</a>
+                                    <img src="../static/images/icons/share.svg" style="height: 18px;width: 18px;">
+                                    <a>催催催(<a class="random"> </a>)</a>
+                                </span>
+                        </div>
+                    </article>
+
+                    {% endif %}
+
+                    <article class="masonry__brick entry format-link animate-this">
+                        <div class="entry__thumb">
+                            <div class="link-wrap">
+                                <h2>时间不会回答成长。<br/>努力才会。</h2>
+                                <cite>
+                                    <a target="_blank" href="http://woniu.press">http://woniu.press</a>
+                                </cite>
+                            </div>
+                        </div>
+
+                    </article> <!-- end article -->
+
+
+                </div> <!-- end masonry -->
+
+            </div> <!-- end masonry-wrap -->
+{#        the slide of right#}
+            <div class="masonry-wrap right_slide" style="height:80%;min-width: 290px" >
+                <article class="masonry__brick entry format-quote animate-this notchange"
+                         style="background:#ffffff; border-radius: 0px;border-top: 5px solid black;vertical-align:middle;text-align: center;height: fit-content">
+                    <div style="padding-top: 20px;vertical-align: middle">
+                        <div style="display:inline-block">
+                            <img src="../static/images/icons/touxiang.jpeg" style="height: 60px;width: 60px;border-radius: 100%;margin:0 auto;">
+                        </div>
+                        <div style="display:inline-block;text-align: left;margin:0 auto;padding-left: 10px;vertical-align: middle">
+                          <p class='footbanner' style="color: #757578;margin:0 auto;font-size: 18px"> 进击的蜗牛</p>
+                          <p class='footbanner' style="color: #757578;margin:0 auto;font-size: 18px"> 创作不易，看且珍惜</p>
+                        </div>
+                    </div>
+                    <div style="padding-top: 5px;">
+                        <span style="color: #757578;font-size: 14px" >---来都来了，点个赞吧---</span>
+                    </div>
+                    <div style="padding:10px 10px">
+                       <img id='dianzanimg2' class="dianzan" onclick="dianzan2()" src="../../static/images/sjb8.gif" style="height: 50px;width: 50px;border-radius: 10%;margin: 0px 0px;">
+                       <img id='dianzanimg3' class="dianzan" onclick="dianzan3()" src="../../static/images/sjb8.gif" style="height: 50px;width: 50px;border-radius: 10%;margin: 0px 0px;">
+                       <img id='dianzanimg4' class="dianzan" onclick="dianzan4()" src="../../static/images/sjb8.gif" style="height: 50px;width: 50px;border-radius: 10%;margin: 0px 0px;">
+                       <img id='dianzanimg5' class="dianzan" onclick="dianzan5()" src="../../static/images/sjb8.gif" style="height: 50px;width: 50px;border-radius: 10%;margin: 0px 0px;">
+                    </div>
+
+                </article> <!-- end article -->
+                <article class="masonry__brick entry format-quote animate-this notchange"
+                         style="background:#ffffff; border-radius: 0px;border-top: 5px solid black;
+                         margin-top:10px;padding-top:10px;height: fit-content;margin-bottom: 10px;padding-bottom: 10px;padding-left: 20px">
+                    <div style="text-align: left;padding-top: 10px">
+                      <p class='footbanner' style="color: #2b2b2e;margin:0 auto;font-size: 20px"> 热门阅读</p>
+                    </div>
+                    <div style="text-align: left;">
+                    {% for blog in hot_blogs %}
+                    <div style="display: inline-block;vertical-align: middle">
+                        <a href={% url 'Blog_Detail_View' blog.id  %}><span style="color: #757578;font-size: 15px" >{{ blog.title }}</span></a>
+                    </div>
+                    <span  style="display:inline-block;vertical-align:middle;font-size: 14px;color: #757578">
+                        <img src="../static/images/icons/read.svg" style="height: 15px;width: 15px;margin: 0 auto;vertical-align: middle;">
+                        <p style="display:inline-block ;vertical-align: middle" ><a class="random" ></a></p>
+                        <img src="../static/images/icons/dianzan.svg" style="height: 15px;width: 15px;margin: 0 auto;vertical-align: middle;">
+                        <p style="display:inline-block ;vertical-align: middle" ><a class="random" ></a></p>
+                    </span>
+                        <br/>
+                    {% endfor %}
+                    </div>
+                </article> <!-- end column large-full entry-->
+            </div>
+
+        </div> <!-- end s-content -->
+        <div>
+                <div class="column large-full">
+                    <nav class="pgn" style="font-size: 20px">
+                    <ul>
+                            {% if page_obj %}
+                            {% if page_obj.has_previous %}
+                                <li><a class="pgn__prev" href="?page={{ page_obj.previous_page_number }}">Prev</a></li>
+                            {% else %}
+                                <li><a class = "pgn__num your_hair" >你的头发</a></li>
+                            {% endif %}
+                                {% for i in  paginator_range %}
+                                    {% if i == page_obj.number %}
+                                        <li><a class="pgn__num current" href="?page={{ i }}">{{ i }}</a></li>
+                                    {% else %}
+                                        <li><a class="pgn__num" href="?page={{ i }}">{{ i }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                            {% if page_obj.has_next %}
+                                <li><a class="pgn__next" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                            {% else %}
+                                <li><a  class = "pgn__num your_hair">你的头发</a></li>
+                            {% endif %}
+                            {% endif %}
+                    </ul>
+                    </nav>
+                </div>
+            </div>
+
+
+
+        <!-- footer
+        ================================================== -->
+        <footer class="s-footer">
+            <div >
+                <div class="column large-full footer__content">
+                    <div class="footer__copyright">
+                        <span>Copyright &copy; 2020  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Designed By Woniu</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="go-top">
+                <a class="smoothscroll" title="Back to Top" href="#top"></a>
+            </div>
+        </footer>
+{#           <canvas style="z-index: -1">#}
+{#           </canvas>#}
+    </div> <!-- end s-wrap -->
+
+
+    <!-- Java Script
+    ================================================== -->
+    <script src="../static/js/jquery-3.2.1.min.js"></script>
+    <script src="../static/js/plugins.js"></script>
+    <script src="../static/js/main.js"></script>
+    <script src="../static/js/main2.js"></script>
+    <script src="../static/js/detailsmain2.js"></script>
+    <script src="../static/js/dianzan.js"></script>
+
+</body>

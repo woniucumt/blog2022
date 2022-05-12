@@ -1,0 +1,90 @@
+
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('../font/fontawesome-webfont.eot?v=3.2.1');
+  src: url('../font/fontawesome-webfont.eot?#iefix&v=3.2.1') format('embedded-opentype'), url('../font/fontawesome-webfont.woff?v=3.2.1') format('woff'), url('../font/fontawesome-webfont.ttf?v=3.2.1') format('truetype'), url('../font/fontawesome-webfont.svg#fontawesomeregular?v=3.2.1') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body,
+ul,
+li,
+ol {
+  padding: 0;
+  margin: 0;
+}
+
+ul,
+ol { list-style: none; }
+
+.xuSlider {
+  width: 600px;
+  height: 280px;
+  overflow: hidden;
+  position: relative;
+  z-index:1;
+  margin-left:5%;
+}
+
+.xuSlider {
+  margin: 20px auto 0;
+  padding:0;
+}
+
+.viewport { height: 100%; }
+
+.sliders {
+  position: absolute;
+  left: 0;
+}
+
+.sliders:after {
+  content: ".";
+  display: block;
+  visibility: hidden;
+  height: 0;
+  clear: both;
+}
+
+.sliders li img {
+  max-width: 100%;
+  display: block;
+}
+
+
+
+.control-nav {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+}
+
+.control-nav li {
+  margin: 0 4px;
+  display: inline-block;
+  zoom: 1;
+*display: inline;
+}
+
+.control-nav a {
+  width: 40px;
+  height: 8px;
+  display: block;
+  background-color: rgba(255, 255, 255, 0.5);
+  text-indent: -999em;
+  border-radius: 50%;
+}
+
+.control-nav a:hover { background-color: rgba(255, 255, 0, 0.9); }
+
+.control-nav .active a {
+  background-color: rgba(255, 255, 0, 0.8);
+  cursor: pointer;
+}
+@media screen and (max-width: 1080px){
+	.xuSlider {
+    width: 550px;
+    height: 290px;}
+}

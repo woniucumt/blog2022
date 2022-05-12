@@ -1,0 +1,40 @@
+/* your styles go here */
+.go-top {
+  z-index: 1;
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transform: translate3d(50%, 0, 0);
+  transform: translate3d(50%,0, 0);
+  transition: all 2.8s;
+  position: relative;
+  /*bottom: 4rem;*/
+  /*right: 2rem;*/
+}
+
+
+.go-top a,
+.go-top a:visited {
+  text-decoration: none;
+  border: none;
+  display: block;
+  height: 6rem;
+  width: 6rem;
+  line-height: 6rem;
+  text-align: center;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  transition: all 1.3s;
+  /*background-image: url(../images/icons/icon-arrow-up.svg);*/
+  /*background-color: #000000;*/
+  /*background-repeat: no-repeat;*/
+  /*background-position: center center;*/
+  background-size: 7px 14px;
+}
+
+.go-top.link-is-visible {
+  opacity: 1;
+  visibility: visible;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
